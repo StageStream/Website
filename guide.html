@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StageStream Wiki</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #111;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00a8e8;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #00a8e8;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .content h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00a8e8;
+            margin-bottom: 1rem;
+        }
+
+        .content h2,
+        .content h3,
+        .content h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .content ul,
+        .content ol {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        .content code {
+            background-color: #1a1a1a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+
+        .content pre {
+            background-color: #1a1a1a;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        .content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar">
+        <h2>StageStream Wiki</h2>
+        <ul id="navigation">
+            <!-- Navigation will be populated by JavaScript -->
+        </ul>
+    </nav>
+    <main class="content" id="content">
+    </main>
+
+    <script>
+        const wikiPages = [
+            { name: 'Home', file: 'index.md' },
+            { name: 'Setup Guide', file: 'setup.md' },
+            { name: 'Environment Variables & Config', file: 'config.md'}
+        ];
+
+        function generateNavigation() {
+            const nav = document.getElementById('navigation');
+            wikiPages.forEach(page => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${page.file.replace('.md', '')}`;
+                a.textContent = page.name;
+                li.appendChild(a);
+                nav.appendChild(li);
+            });
+        }
+
+        function getCurrentPage() {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                return `${hash}.md`;
+            }
+            return 'index.md';
+        }
+
+        async function renderContent(file) {
+            try {
+                const response = await fetch(`/wiki/${file}`);
+                if (!response.ok) {
+                    throw new Error('Page not found');
+                }
+                const markdown = await response.text();
+                const content = document.getElementById('content');
+                content.innerHTML = marked.parse(markdown);
+            } catch (error) {
+                console.error('Error:', error);
+                const content = document.getElementById('content');
+                content.innerHTML = '<h1>Error</h1><p>The requested page could not be found.</p>';
+            }
+        }
+
+        function init() {
+            generateNavigation();
+            const currentPage = getCurrentPage();
+            renderContent(currentPage);
+
+            window.addEventListener('hashchange', () => {
+                const newPage = getCurrentPage();
+                renderContent(newPage);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>
