@@ -19,8 +19,8 @@ StageStream consists of multiple repositories, each containing a different part 
 
 ## Running StageStream
 For detailed instructions on how to set up and run StageStream, please refer to the following guides:
-- [Running StageStream with Docker](https://stagestream.jxnxsdev.me/guide#dockerguide)
-- [Building and Running StageStream Manually](https://stagestream.jxnxsdev.me/guide?)
+- [Running StageStream with Docker](https://stagestream.jxnxsdev.me/guide.html#dockerguide)
+- [Building and Running StageStream Manually](https://stagestream.jxnxsdev.me/guide.html#error)
 
 ## Support
 For questions, troubleshooting, or discussions, check out our [Discussions page](https://github.com/StageStream/StageStream/discussions) or open an issue on GitHub.
