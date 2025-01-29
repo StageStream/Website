@@ -1,6 +1,6 @@
 # StageStream Docker-Compose Setup
 
-StageStream is optimized for deployment with Docker Compose. If you don’t have Docker Compose installed, follow the steps in our [Docker Compose Installation Guide](https://stagestream.jxnxsdev.me/guide#installdc).
+StageStream is optimized for deployment with Docker Compose. If you don’t have Docker Compose installed, follow the steps in our [Docker Compose Installation Guide](https://stagestream.jxnxsdev.me/guide.html#installdc).
 
 ## Preparing the Project
 
@@ -10,7 +10,7 @@ To get started, clone the Docker Compose project repository by running:
 git clone https://github.com/StageStream/StageStream.git
 ```
 
-Within the project folder, you’ll find two environment files. Be sure to configure these based on the instructions in our [Environment Guide](https://stagestream.jxnxsdev.me/guide#environment).
+Within the project folder, you’ll find two environment files. Be sure to configure these based on the instructions in our [Environment Guide](https://stagestream.jxnxsdev.me/guide.html#environment).
 
 ## Network Configuration
 
